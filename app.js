@@ -14,7 +14,7 @@ fs.readFile('input.txt', (err, data) => {
   //Splits Cities and Queries into their own arrays//
     
   let cities = [];
-  let distanceQueires = [];
+  let distanceQueries = [];
   let pointToPointQuerires = [];
   let loopQueries = [];
 
@@ -25,11 +25,11 @@ fs.readFile('input.txt', (err, data) => {
   
 
 
-  inputData.forEach(function(element, index){ 
+  inputData.forEach((element, index) => { 
     if(element.match(regexCity) != null){ 
-       cities.push(element);  
+      cities.push(element);  
     } else if (element.match(regexDist) != null){
-        distanceQueires.push(element);
+      distanceQueries.push(element);
     } else if (element.match(regexPointToPoint) != null){
       pointToPointQuerires.push(element);
     } else if (element.match(regexLoop) != null){
@@ -38,21 +38,58 @@ fs.readFile('input.txt', (err, data) => {
     });
 
  console.log("--------------------> " + cities + " From cities array");
- console.log("--------------------> " + distanceQueires + " From distance queries")
- console.log("--------------------> " + pointToPointQuerires + " From point to array");
+ console.log("--------------------> " + distanceQueries + " From distance queries")
+ console.log("--------------------> " + pointToPointQuerires + " From point to poinr quires");
  console.log("--------------------> " + loopQueries + " From Loop queries");
 
  //Begins to split up cities to a more usuable structure
 
  let citiesLinked = [];
- let regexLastCity = /$(\w+)\$$/;
+ 
      
  cities.forEach((element, index) => {
-  
-  element.split(" ");
-  citiesLinked.push
- });
+    element = element.split(" - ");
+    let firstCities = element[0];
+    let secondCities = element[1];
+    citiesLinked.push([firstCities, secondCities]);
+  console.log(element);
+  });
+ 
+  //Get operators from Queries
+  let distanceQueriesData = [];
 
+  distanceQueries.forEach((element, index) => {
+    element = element.split(" ");
+    let stops = element[4];
+    let city = element[2];
+    distanceQueriesData.push([stops, city]);
+  });
+
+ 
+  // let pointToPointData = [];
+
+  // pointToPointQuerires.forEach((element, index) => {
+  //   let match = citiesLinked;
+  //   let cityNames = new RegExp(match);
+  //   element = element.split(" ");
+  //     if(element.match(cityNames) != null) {
+  //     pointToPointData.push(element)
+  //   }
+  //   console.log(pointToPointData);
+  // });  
+
+
+  let loopQueriesData = [];
+
+  loopQueries.forEach((element, index) => {
+    element = element.split(" ");
+    loopQueriesData.push([element.pop()])
+  });
+  
+  console.log(loopQueriesData);  
+
+  console.log(distanceQueriesData);
+  
  console.log("------------------> " + citiesLinked + " From cities linked");
 });
 
